@@ -87,7 +87,12 @@
                             {{ isset($client) ? $client->address : '' }}
                         </div>
                     </div>
-
+                    @if (count($historys))
+                        <div class="col-sm-6 mt-4">
+                            <button type="submit" class="btn btn-success me-sm-2 me-1 waves-effect waves-light"><i
+                                    class="fa-solid fa-download"></i> &nbsp; Invoice</button>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

@@ -47,9 +47,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'Home'])->name('dashboard');
 
-
     Route::middleware(['auth', 'role:Admin'])->group(function () {
-        
+
         //Admins
 
         Route::get('/admins', [AdminController::class, 'List'])->name('admin.list');
@@ -81,31 +80,34 @@ Route::middleware('auth')->group(function () {
         Route::get('/employes/delete/{id}', [EmployeController::class, 'delete'])->name('emp.delete');
 
         Route::get('/employes/datatables', [EmployeController::class, 'datatblesList'])->name('emp.list.datatbles');
-            
+
     });
-    
-    //Clients
 
-    Route::get('/clients', [ClientController::class, 'List'])->name('client.list');
+    Route::middleware(['auth', 'role:Emp'])->group(function () {
 
-    Route::get('/clients/add', [ClientController::class, 'add'])->name('client.add');
+        //Clients
 
-    Route::post('/clients/add/submit', [ClientController::class, 'addSubmit'])->name('client.add.submit');
+        Route::get('/clients', [ClientController::class, 'List'])->name('client.list');
 
-    Route::get('/clients/edit/{id}', [ClientController::class, 'edit'])->name('client.edit');
+        Route::get('/clients/add', [ClientController::class, 'add'])->name('client.add');
 
-    Route::post('/clients/edit/submit', [ClientController::class, 'editSubmit'])->name('client.edit.submit');
+        Route::post('/clients/add/submit', [ClientController::class, 'addSubmit'])->name('client.add.submit');
 
-    Route::get('/clients/delete/{id}', [ClientController::class, 'delete'])->name('client.delete');
+        Route::get('/clients/edit/{id}', [ClientController::class, 'edit'])->name('client.edit');
 
-    Route::get('/clients/view/{id}', [ClientController::class, 'view'])->name('client.view');
+        Route::post('/clients/edit/submit', [ClientController::class, 'editSubmit'])->name('client.edit.submit');
 
-    Route::get('/clients/datatables', [ClientController::class, 'datatblesList'])->name('client.list.datatbles');
+        Route::get('/clients/delete/{id}', [ClientController::class, 'delete'])->name('client.delete');
 
-    //Payemnt History
+        Route::get('/clients/view/{id}', [ClientController::class, 'view'])->name('client.view');
 
-    Route::post('/clients/add/submit', [PaymentHistoryController::class, 'addSubmit'])->name('payment.add.submit');
+        Route::get('/clients/datatables', [ClientController::class, 'datatblesList'])->name('client.list.datatbles');
 
+        //Payemnt History
+
+        Route::post('/payments/add/submit', [PaymentHistoryController::class, 'addSubmit'])->name('payment.add.submit');
+
+    });
 });
 
 // forgot password
@@ -115,4 +117,5 @@ Route::post('/forgot-password/submit', [PasswordResetLinkController::class, 'pas
 Route::get('/reset-password', [PasswordResetLinkController::class, 'passwordResetConfirm'])->name('password.reset.comfirm');
 
 Route::post('/reset-password/submit', [PasswordResetLinkController::class, 'passwordResetConfirmSubmit'])->name('password.reset.comfirm.submit');
+
 require __DIR__ . '/auth.php';

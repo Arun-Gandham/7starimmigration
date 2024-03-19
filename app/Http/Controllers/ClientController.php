@@ -74,9 +74,9 @@ class ClientController extends Controller
         );
 
         if ($client) {
-            return redirect()->route('client.list')->with('success', 'Succesfully created');
+            return redirect()->route('client.view', $client->id)->with('success', 'Succesfully created');
         } else {
-            return redirect()->route('client.list')->with('error', 'Something went wrong');
+            return redirect()->route('client.view', $client->id)->with('error', 'Something went wrong');
         }
     }
 

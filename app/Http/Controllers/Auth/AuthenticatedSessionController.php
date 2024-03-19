@@ -12,7 +12,7 @@ use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
-      /**
+    /**
      * Display the login view.
      */
     public function create(): View
@@ -29,8 +29,11 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        if (auth()->user()->role == "Admin") {
+            return redirect()->intended(RouteServiceProvider::HOME);
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        }
+        return redirect()->intended('/clients');
     }
 
     /**
