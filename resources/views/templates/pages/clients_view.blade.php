@@ -49,36 +49,64 @@
         <div class="col">
             <div class="card mb-4">
                 <div class="row mb-3 p-4">
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <label class="col-sm-3 col-form-label" for="multicol-username"><b>Client Name :</b></label>
                         <div class="col-sm-9">
                             {{ isset($client) ? $client->name : '' }}
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <label class="col-sm-3 col-form-label" for="multicol-username"><b>Amount :</b></label>
                         <div class="col-sm-9">
                             {{ isset($client) ? $client->amount : '' }}
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <label class="col-sm-3 col-form-label" for="multicol-username"><b>Phone :</b></label>
                         <div class="col-sm-9">
                             {{ isset($client) ? $client->phone : '' }}
                         </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <label class="col-sm-3 col-form-label" for="multicol-username"><b>Enquiry Status :</b></label>
                         <div class="col-sm-9">
                             {{ isset($client) ? $client->enq_status : '' }}
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <label class="col-sm-6 col-form-label" for="multicol-username"><b>File Submited or not :</b></label>
                         <div class="col-sm-9">
                             {{ isset($client) ? $client->file_submitted : '' }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-12 col-form-label" for="multicol-username"><b>Country :</b></label>
+                        <div class="col-sm-12">
+                            {{ isset($client) && isset($client->country->name) ? $client->country->name : '-' }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-12 col-form-label" for="multicol-username"><b>Paid Amount :</b></label>
+                        <div class="col-sm-12">
+                            {{ isset($client) ? $client->getPaymentSum() : '' }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-12 col-form-label" for="multicol-username"><b>Pending Amount :</b></label>
+                        <div class="col-sm-12">
+                            {{ isset($client) ? ($client->amount - $client->getPaymentSum() < 0 ? 0 : $client->amount - $client->getPaymentSum()) : '' }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-12 col-form-label" for="multicol-username"><b>Date :</b></label>
+                        <div class="col-sm-12">
+                            @php
+                                $dateString = $client->created_at;
+                                $date = new DateTime($dateString);
+                                echo $date->format('jS F Y, g:i A');
+                            @endphp
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -87,12 +115,16 @@
                             {{ isset($client) ? $client->address : '' }}
                         </div>
                     </div>
-                    @if (count($historys))
-                        <div class="col-sm-6 mt-4">
+
+                    <div class="col-sm-12 mt-4">
+                        @if (count($historys))
                             <button type="submit" class="btn btn-success me-sm-2 me-1 waves-effect waves-light"><i
                                     class="fa-solid fa-download"></i> &nbsp; Invoice</button>
-                        </div>
-                    @endif
+                        @endif
+                        <button type="submit" class="btn btn-secondary me-sm-2 me-1 waves-effect waves-dark"><a
+                                href="{{ route('client.edit', $client->id) }}"><i class="fa fa-pen"></i> &nbsp;
+                                Edit</a></button>
+                    </div>
                 </div>
             </div>
         </div>

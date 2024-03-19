@@ -22,11 +22,39 @@
       "permissions": ["Emp"]
     },
     {
+      "url": "/admins/clients",
+      "name": "Clients",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "admin.client.list",
+      "permissions": ["Admin"]
+    },
+    {
       "url": "/clients/add",
       "name": "Add Client",
       "icon": "menu-icon tf-icons ti ti-users",
       "slug": "client.add",
       "permissions": ["Emp"]
-    }
+    },
+    {
+            "url": "/country",
+            "name": "Countries",
+            "icon": "menu-icon tf-icons ti ti-users-plus",
+            "slug": "country",
+            "permissions": ["Admin"],
+            "submenu": [
+                {
+                    "url": "country",
+                    "name": "List",
+                    "slug": "country.list",
+                    "permissions": ["Admin"]
+                },
+                {
+                    "url": "country/add",
+                    "name": "Add",
+                    "slug": "country.add",
+                    "permissions": ["Admin"]
+                }
+            ]
+        }
   ]
 }

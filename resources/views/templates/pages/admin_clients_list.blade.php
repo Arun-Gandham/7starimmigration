@@ -61,10 +61,10 @@
             <table id="data-table" class="datatables-basic table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Client Name</th>
                         <th>Phone</th>
-                        <th>Country</th>
                         <th>Amount</th>
+                        <th>Employe</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -78,7 +78,7 @@
             $('#data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('client.list.datatbles') }}',
+                ajax: '{{ route('admin.client.list.datatbles') }}',
                 columns: [{
                         data: 'name'
                     },
@@ -86,10 +86,10 @@
                         data: 'phone'
                     },
                     {
-                        data: 'country'
+                        data: 'amount'
                     },
                     {
-                        data: 'amount'
+                        data: 'emp'
                     },
                     {
                         data: 'actions'

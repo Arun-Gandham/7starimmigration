@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'DataTables - Tables')
+@section('title', isset($pageSettings['title']) ? $pageSettings['title'] : 'Product Feet List')
 
 @section('vendor-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
@@ -48,9 +48,9 @@
 
     <div class="d-flex justify-content-between">
         <h4 class="py-3 mb-3">
-            <span class="text-muted fw-light">Clients /</span> List
+            <span class="text-muted fw-light">Country /</span> List
         </h4>
-        <a href="{{ route('client.add') }}"><button class="btn btn-primary mt-2" style="padding: 15px;height: 30px;"><i
+        <a href="{{ route('country.add') }}"><button class="btn btn-primary mt-2" style="padding: 15px;height: 30px;"><i
                     class="fa-solid fa-plus"></i>
                 Add</button></a>
     </div>
@@ -62,40 +62,23 @@
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Phone</th>
-                        <th>Country</th>
-                        <th>Amount</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @foreach ($Countrys as $country)
+                        <tr>
+                            <td>{{ $country->name }}</td>
+                            <td>
+                                <a href="{{ route('country.edit', ['id' => $country->id]) }}" class="text-success me-2"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route('country.delete', ['id' => $country->id]) }}" class="text-danger ms-2"><i
+                                        class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
-    <!--/ DataTable with Buttons -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('client.list.datatbles') }}',
-                columns: [{
-                        data: 'name'
-                    },
-                    {
-                        data: 'phone'
-                    },
-                    {
-                        data: 'country'
-                    },
-                    {
-                        data: 'amount'
-                    },
-                    {
-                        data: 'actions'
-                    }
-                ]
-            });
-        });
-    </script>
 @endsection

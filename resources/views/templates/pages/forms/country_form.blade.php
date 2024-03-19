@@ -1,6 +1,6 @@
 @extends('layouts/layoutMaster')
 
-@section('title', 'DataTables - Tables')
+@section('title', isset($pageSettings['title']) ? $pageSettings['title'] : 'Country Form')
 
 @section('vendor-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
@@ -46,56 +46,41 @@
     @endif
 
 
-    <div class="d-flex justify-content-between">
-        <h4 class="py-3 mb-3">
-            <span class="text-muted fw-light">Clients /</span> List
-        </h4>
-        <a href="{{ route('client.add') }}"><button class="btn btn-primary mt-2" style="padding: 15px;height: 30px;"><i
-                    class="fa-solid fa-plus"></i>
-                Add</button></a>
-    </div>
-
-    <!-- DataTable with Buttons -->
-    <div class="card">
-        <div class="card-datatable table-responsive pt-0">
-            <table id="data-table" class="datatables-basic table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Country</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-            </table>
+    <div class="row">
+        <!-- Form Separator -->
+        <div class="col">
+            <div class="card mb-4">
+                <form class="card-body" method="POST"
+                    action="{{ isset($Country) ? route('country.edit.submit') : route('country.add.submit') }}">
+                    @csrf
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="col-sm-3 col-form-label" for="multicol-username">Name</label>
+                                    <div class="col-sm-11">
+                                        <input type="text" class="form-control" placeholder="Name" name="name"
+                                            value="{{ isset($Country) ? $Country->name : '' }}" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pt-4">
+                            <div class="row justify-content-start">
+                                <div class="col-sm-9">
+                                    <input type="hidden" name="id" value="{{ isset($Country) ? $Country->id : '' }}">
+                                    <button type="submit" class="btn btn-primary me-sm-2 me-1 waves-effect waves-light"><i
+                                            class='fa-solid fa-{{ isset($Country) ? 'cloud-arrow-up' : 'save' }}'></i>
+                                        &nbsp;
+                                        {{ isset($Country) ? 'Update' : 'Save' }}</button>
+                                    <button class="btn btn-label-secondary waves-effect"><a
+                                            href="{{ route('country.list') }}">Cancel</a></button>
+                                </div>
+                            </div>
+                        </div>
+                </form>
+            </div>
         </div>
     </div>
-    <!--/ DataTable with Buttons -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('client.list.datatbles') }}',
-                columns: [{
-                        data: 'name'
-                    },
-                    {
-                        data: 'phone'
-                    },
-                    {
-                        data: 'country'
-                    },
-                    {
-                        data: 'amount'
-                    },
-                    {
-                        data: 'actions'
-                    }
-                ]
-            });
-        });
-    </script>
+
 @endsection

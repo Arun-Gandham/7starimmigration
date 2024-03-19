@@ -98,6 +98,18 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <label class="col-sm-6 col-form-label" for="multicol-username">Country</label>
+                            <div class="col-sm-9">
+                                <select class="form-select" id="basic-default-country" name="country_id" required="">
+                                    @foreach ($countries as $country)
+                                        <option
+                                            {{ isset($client) && $client->country_id == $country->id ? 'selected' : '' }}
+                                            value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
                         <div class="col-sm-12">
                             <label class="col-sm-12 col-form-label" for="multicol-username">Address</label>
                             <div class="col-sm-12">
