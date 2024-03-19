@@ -5,28 +5,28 @@
       "name": "Admins",
       "icon": "menu-icon tf-icons ti ti-users",
       "slug": "admin.list",
-      "per": ["Admin"]
+      "permissions": ["Admin"]
     },
     {
       "url": "/employes",
       "name": "Employes",
       "icon": "menu-icon tf-icons ti ti-users",
       "slug": "emp.list",
-      "per": ["Admin"]
+      "permissions": ["Admin"]
     },
     {
       "url": "/clients",
       "name": "Clients",
       "icon": "menu-icon tf-icons ti ti-users",
       "slug": "client.list",
-      "per": ["Emp"]
+      "permissions": ["Emp"]
     },
     {
       "url": "/clients/add",
       "name": "Add Client",
       "icon": "menu-icon tf-icons ti ti-users",
       "slug": "client.add",
-      "per": ["Emp"]
+      "permissions": ["Emp"]
     }
   ]
 }

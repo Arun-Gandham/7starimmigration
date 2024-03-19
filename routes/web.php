@@ -47,38 +47,43 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'Home'])->name('dashboard');
 
-    //Admins
 
-    Route::get('/admins', [AdminController::class, 'List'])->name('admin.list');
+    Route::middleware(['auth', 'role:Admin'])->group(function () {
+        
+        //Admins
 
-    Route::get('/admins/add', [AdminController::class, 'add'])->name('admin.add');
+        Route::get('/admins', [AdminController::class, 'List'])->name('admin.list');
 
-    Route::post('/admins/add/submit', [AdminController::class, 'addSubmit'])->name('admin.add.submit');
+        Route::get('/admins/add', [AdminController::class, 'add'])->name('admin.add');
 
-    Route::get('/admins/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
+        Route::post('/admins/add/submit', [AdminController::class, 'addSubmit'])->name('admin.add.submit');
 
-    Route::post('/admins/edit/submit', [AdminController::class, 'editSubmit'])->name('admin.edit.submit');
+        Route::get('/admins/edit/{id}', [AdminController::class, 'edit'])->name('admin.edit');
 
-    Route::get('/admins/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
+        Route::post('/admins/edit/submit', [AdminController::class, 'editSubmit'])->name('admin.edit.submit');
 
-    Route::get('/admins/datatables', [AdminController::class, 'datatblesList'])->name('admin.list.datatbles');
+        Route::get('/admins/delete/{id}', [AdminController::class, 'delete'])->name('admin.delete');
 
-    //Employes
+        Route::get('/admins/datatables', [AdminController::class, 'datatblesList'])->name('admin.list.datatbles');
 
-    Route::get('/employes', [EmployeController::class, 'List'])->name('emp.list');
+        //Employes
 
-    Route::get('/employes/add', [EmployeController::class, 'add'])->name('emp.add');
+        Route::get('/employes', [EmployeController::class, 'List'])->name('emp.list');
 
-    Route::post('/employes/add/submit', [EmployeController::class, 'addSubmit'])->name('emp.add.submit');
+        Route::get('/employes/add', [EmployeController::class, 'add'])->name('emp.add');
 
-    Route::get('/employes/edit/{id}', [EmployeController::class, 'edit'])->name('emp.edit');
+        Route::post('/employes/add/submit', [EmployeController::class, 'addSubmit'])->name('emp.add.submit');
 
-    Route::post('/employes/edit/submit', [EmployeController::class, 'editSubmit'])->name('emp.edit.submit');
+        Route::get('/employes/edit/{id}', [EmployeController::class, 'edit'])->name('emp.edit');
 
-    Route::get('/employes/delete/{id}', [EmployeController::class, 'delete'])->name('emp.delete');
+        Route::post('/employes/edit/submit', [EmployeController::class, 'editSubmit'])->name('emp.edit.submit');
 
-    Route::get('/employes/datatables', [EmployeController::class, 'datatblesList'])->name('emp.list.datatbles');
+        Route::get('/employes/delete/{id}', [EmployeController::class, 'delete'])->name('emp.delete');
 
+        Route::get('/employes/datatables', [EmployeController::class, 'datatblesList'])->name('emp.list.datatbles');
+            
+    });
+    
     //Clients
 
     Route::get('/clients', [ClientController::class, 'List'])->name('client.list');
