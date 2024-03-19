@@ -44,50 +44,52 @@
             </button>
         </div>
     @endif
+    <div class="row">
+        <!-- Form Separator -->
+        <div class="col">
+            <div class="card mb-4">
+                <div class="row mb-3 p-4">
+                    <div class="col-md-6">
+                        <label class="col-sm-3 col-form-label" for="multicol-username"><b>Client Name :</b></label>
+                        <div class="col-sm-9">
+                            {{ isset($client) ? $client->name : '' }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-sm-3 col-form-label" for="multicol-username"><b>Amount :</b></label>
+                        <div class="col-sm-9">
+                            {{ isset($client) ? $client->amount : '' }}
+                        </div>
+                    </div>
 
+                    <div class="col-md-6">
+                        <label class="col-sm-3 col-form-label" for="multicol-username"><b>Phone :</b></label>
+                        <div class="col-sm-9">
+                            {{ isset($client) ? $client->phone : '' }}
+                        </div>
+                    </div>
 
-    <div class="d-flex justify-content-between">
-        <h4 class="py-3 mb-3">
-            <span class="text-muted fw-light">Clients /</span> List
-        </h4>
-        <a href="{{ route('client.add') }}"><button class="btn btn-primary mt-2" style="padding: 15px;height: 30px;"><i
-                    class="fa-solid fa-plus"></i>
-                Add</button></a>
-    </div>
+                    <div class="col-md-6">
+                        <label class="col-sm-3 col-form-label" for="multicol-username"><b>Enquiry Status :</b></label>
+                        <div class="col-sm-9">
+                            {{ isset($client) ? $client->enq_status : '' }}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="col-sm-6 col-form-label" for="multicol-username"><b>File Submited or not :</b></label>
+                        <div class="col-sm-9">
+                            {{ isset($client) ? $client->file_submitted : '' }}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label class="col-sm-12 col-form-label" for="multicol-username"><b>Address :</b></label>
+                        <div class="col-sm-12">
+                            {{ isset($client) ? $client->address : '' }}
+                        </div>
+                    </div>
 
-    <!-- DataTable with Buttons -->
-    <div class="card">
-        <div class="card-datatable table-responsive pt-0">
-            <table id="data-table" class="datatables-basic table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-            </table>
+                </div>
+            </div>
         </div>
-    </div>
-    <!--/ DataTable with Buttons -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#data-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('client.list.datatbles') }}',
-                columns: [{
-                        data: 'name'
-                    },
-                    {
-                        data: 'phone'
-                    },
-                    {
-                        data: 'actions'
-                    }
-                ]
-            });
-        });
-    </script>
-@endsection
+
+    @endsection

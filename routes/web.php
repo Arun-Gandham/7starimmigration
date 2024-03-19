@@ -92,6 +92,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/clients/delete/{id}', [ClientController::class, 'delete'])->name('client.delete');
 
+    Route::get('/clients/view/{id}', [ClientController::class, 'view'])->name('client.view');
+
     Route::get('/clients/datatables', [ClientController::class, 'datatblesList'])->name('client.list.datatbles');
 
 // forgot password
