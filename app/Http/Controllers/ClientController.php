@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\PaymentHistory;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -16,7 +17,9 @@ class ClientController extends Controller
     public function view($id)
     {
         $client = Client::findOrFail($id);
-        return view('templates.pages.clients_view', compact('client'));
+        $historys = PaymentHistory::where('client_id', $id)->get();
+
+        return view('templates.pages.clients_view', compact('client', 'historys'));
     }
 
     public function add()

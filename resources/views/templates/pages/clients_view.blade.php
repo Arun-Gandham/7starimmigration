@@ -91,5 +91,101 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="nav-align-top mb-4">
+                    <ul class="nav nav-pills mb-3" role="tablist">
+                        <li class="nav-item">
+                            <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab"
+                                data-bs-target="#history" aria-controls="navs-pills-top-profile"
+                                aria-selected="false">Payment History</button>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                data-bs-target="#add-payment" aria-controls="navs-pills-top-home" aria-selected="true">Add
+                                Payment</button>
+                        </li>
+
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="add-payment" role="tabpanel">
+                            <form class="card-body" method="POST" action="{{ route('payment.add.submit') }}">
+                                @csrf
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <label class="col-sm-3 col-form-label" for="multicol-username">Amount</label>
+                                        <div class="col-sm-12">
+                                            <input type="number" id="multicol-username" class="form-control"
+                                                placeholder="Amount" name="amount" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <label class="col-sm-12 col-form-label" for="multicol-username">Note</label>
+                                        <div class="col-sm-12">
+                                            <textarea class="form-control" placeholder="Address" rows="3" name="note"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="pt-4">
+                                        <div class="row justify-content-start">
+                                            <div class="col-sm-9">
+                                                <input type="hidden" name="client_id" value="{{ $client->id }}">
+                                                <button type="submit"
+                                                    class="btn btn-primary me-sm-2 me-1 waves-effect waves-light">Submit</button>
+                                                <button class="btn btn-label-secondary waves-effect"><a
+                                                        href="{{ route('client.list') }}">Cancel</a></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+
+
+
+                        </div>
+                        <div class="tab-pane fade show active" id="history" role="tabpanel">
+                            <div class="table-responsive text-nowrap">
+                                @if (count($historys))
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Amount</th>
+                                                <th>Date</th>
+                                                <th>Note</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($historys as $history)
+                                                <tr>
+                                                    <td>
+                                                        {{ $history->amount }}
+                                                    </td>
+                                                    <td>
+                                                        @php
+                                                            $dateString = $history->created_at; // Example date and time
+                                                            $date = new DateTime($dateString);
+                                                            $formattedDateTime = $date->format('jS F Y, g:i A');
+                                                            echo $formattedDateTime;
+                                                        @endphp
+                                                    </td>
+                                                    <td>
+
+                                                        {{ $history->note ?? '-' }}
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                @else
+                                    <h2>No payment history</h2>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     @endsection

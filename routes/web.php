@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\PaymentHistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +47,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'Home'])->name('dashboard');
 
-//Admins
+    //Admins
 
     Route::get('/admins', [AdminController::class, 'List'])->name('admin.list');
 
@@ -62,7 +63,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admins/datatables', [AdminController::class, 'datatblesList'])->name('admin.list.datatbles');
 
-//Employes
+    //Employes
 
     Route::get('/employes', [EmployeController::class, 'List'])->name('emp.list');
 
@@ -78,7 +79,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/employes/datatables', [EmployeController::class, 'datatblesList'])->name('emp.list.datatbles');
 
-//Clients
+    //Clients
 
     Route::get('/clients', [ClientController::class, 'List'])->name('client.list');
 
@@ -96,8 +97,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/clients/datatables', [ClientController::class, 'datatblesList'])->name('client.list.datatbles');
 
-// forgot password
+    //Payemnt History
+
+    Route::post('/clients/add/submit', [PaymentHistoryController::class, 'addSubmit'])->name('payment.add.submit');
+
 });
+
+// forgot password
 
 Route::post('/forgot-password/submit', [PasswordResetLinkController::class, 'passwordResetSubmit'])->name('password.reset.submit');
 
