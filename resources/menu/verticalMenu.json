@@ -1,0 +1,28 @@
+{
+  "menu": [
+    {
+      "url": "/admins",
+      "name": "Admins",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "admin.list"
+    },
+    {
+      "url": "/employes",
+      "name": "Employes",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "emp.list"
+    },
+    {
+      "url": "/clients",
+      "name": "Clients",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "client.list"
+    },
+    {
+      "url": "/clients/add",
+      "name": "Add Client",
+      "icon": "menu-icon tf-icons ti ti-users",
+      "slug": "client.add"
+    }
+  ]
+}
