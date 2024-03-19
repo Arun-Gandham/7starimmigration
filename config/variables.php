@@ -2,8 +2,8 @@
 // Variables
 return [
     "creatorName" => "Arun Sai Gandham",
-    "creatorUrl" => "https://pixinvent.com",
-    "templateName" => "7 Star",
-    "templateSuffix" => "Map Game template",
+    "creatorUrl" => "",
+    "templateName" => "7 Star Immigration",
+    "templateSuffix" => "7 Star Immigration template",
     "templateVersion" => "1.0.0",
 ];

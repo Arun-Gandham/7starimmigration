@@ -32,10 +32,10 @@
         <div class="authentication-inner row">
             <!-- /Left Text -->
             <div class="d-none d-lg-flex col-lg-7 p-0">
-                <div class="auth-cover-bg auth-cover-bg-color d-flex justify-content-center align-items-center">
-                    <img src="{{ asset('assets/img/illustrations/auth-login-illustration-' . $configData['style'] . '.png') }}"
-                        alt="auth-login-cover" class="img-fluid my-5 auth-illustration"
-                        data-app-light-img="illustrations/logo.png" data-app-dark-img="illustrations/logo.png">
+                <div class="auth-cover-bg d-flex justify-content-center align-items-center">
+                    <img src="{{ asset('assets/img/illustrations/LOGO.png') }}" alt="auth-login-cover"
+                        class="img-fluid my-5 auth-illustration" data-app-light-img="illustrations/LOGO.png"
+                        data-app-dark-img="illustrations/logo.png">
 
                     <img src="{{ asset('assets/img/illustrations/bg-shape-image-' . $configData['style'] . '.png') }}"
                         alt="auth-login-cover" class="platform-bg"
@@ -48,12 +48,12 @@
             <!-- Login -->
             <div class="d-flex col-12 col-lg-5 align-items-center p-sm-5 p-4">
                 <div class="w-px-400 mx-auto">
-                    <!-- Logo -->
+                    {{-- <!-- Logo -->
                     <div class="app-brand mb-4">
                         <a href="{{ url('/') }}" class="app-brand-link gap-2">
                             <span class="app-brand-logo demo">@include('_partials.macros', ['height' => 20, 'withbg' => 'fill: #fff;'])</span>
                         </a>
-                    </div>
+                    </div> --}}
                     <!-- /Logo -->
                     <h3 class=" mb-1">Welcome to {{ config('variables.templateName') }}! 👋</h3>
                     <p class="mb-4">Please sign-in to your account and start the adventure</p>
