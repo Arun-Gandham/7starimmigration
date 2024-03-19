@@ -4,25 +4,29 @@
       "url": "/admins",
       "name": "Admins",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "admin.list"
+      "slug": "admin.list",
+      "per": ["Admin"]
     },
     {
       "url": "/employes",
       "name": "Employes",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "emp.list"
+      "slug": "emp.list",
+      "per": ["Admin"]
     },
     {
       "url": "/clients",
       "name": "Clients",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "client.list"
+      "slug": "client.list",
+      "per": ["Emp"]
     },
     {
       "url": "/clients/add",
       "name": "Add Client",
       "icon": "menu-icon tf-icons ti ti-users",
-      "slug": "client.add"
+      "slug": "client.add",
+      "per": ["Emp"]
     }
   ]
 }
