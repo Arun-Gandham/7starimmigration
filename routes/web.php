@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CountryController;
 use App\Http\Controllers\EmployeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\PaymentHistoryController;
 use Illuminate\Support\Facades\Route;
 
@@ -104,6 +105,10 @@ Route::middleware('auth')->group(function () {
         });
 
     });
+
+    //Invoice
+
+    Route::get('/invoice', [InvoiceController::class, 'generatePDF'])->name('invoice');
 
     //Clients
 

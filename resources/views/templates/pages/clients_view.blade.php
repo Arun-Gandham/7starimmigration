@@ -118,12 +118,14 @@
 
                     <div class="col-sm-12 mt-4">
                         @if (count($historys))
-                            <button type="submit" class="btn btn-success me-sm-2 me-1 waves-effect waves-light"><i
-                                    class="fa-solid fa-download"></i> &nbsp; Invoice</button>
+                            <a href="{{ route('invoice') }}"><button type="button"
+                                    class="btn btn-success me-sm-2 me-1 waves-effect waves-light"><i
+                                        class="fa-solid fa-download"></i> &nbsp; Invoice</button></a>
                         @endif
-                        <button type="submit" class="btn btn-secondary me-sm-2 me-1 waves-effect waves-dark"><a
-                                href="{{ route('client.edit', $client->id) }}"><i class="fa fa-pen"></i> &nbsp;
-                                Edit</a></button>
+                        <a href="{{ route('client.edit', $client->id) }}"><button type="button"
+                                class="btn btn-secondary me-sm-2 me-1 waves-effect waves-dark"><i class="fa fa-pen"></i>
+                                &nbsp;
+                                Edit</button></a>
                     </div>
                 </div>
             </div>

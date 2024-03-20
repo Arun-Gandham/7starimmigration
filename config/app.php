@@ -170,6 +170,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\MenuServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -187,6 +188,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Helper' => App\Helpers\Helpers::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ])->toArray(),
 
 ];
