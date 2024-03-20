@@ -66,9 +66,9 @@ class ClientController extends Controller
         $client->country_id = $req->country_id;
 
         if ($client->save()) {
-            return redirect()->route('client.list')->with('success', 'Succesfully updated');
+            return redirect()->route(auth()->user()->role == "Admin" ? 'admin.client.list' : 'client.list')->with('success', 'Succesfully updated');
         } else {
-            return redirect()->route('client.list')->with('error', 'Something went wrong');
+            return redirect()->route(auth()->user()->role == "Admin" ? 'admin.client.list' : 'client.list')->with('error', 'Something went wrong');
         }
     }
 

@@ -25,9 +25,6 @@
     <script src="{{ asset('assets/vendor/libs/@form-validation/umd/plugin-auto-focus/index.min.js') }}"></script>
 @endsection
 
-@section('page-script')
-    {{-- <script src="{{ asset('assets/js/tables-datatables-basic.js') }}"></script> --}}
-@endsection
 
 @section('content')
     @if ($error = session('error'))

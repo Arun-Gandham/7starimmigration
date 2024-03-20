@@ -182,10 +182,6 @@
                                 </div>
                             </form>
 
-
-
-
-
                         </div>
                         <div class="tab-pane fade show active" id="history" role="tabpanel">
                             <div class="table-responsive text-nowrap">

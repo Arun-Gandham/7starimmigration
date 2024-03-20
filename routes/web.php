@@ -128,6 +128,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/clients/edit/submit', [ClientController::class, 'editSubmit'])->name('client.edit.submit');
 
+    // Route::post('/clients-submit/edit', [ClientController::class, 'editSubmitClient'])->name('client.submit.edit.submit');
+
     Route::get('/clients/delete/{id}', [ClientController::class, 'delete'])->name('client.delete');
 
     Route::get('/clients/view/{id}', [ClientController::class, 'view'])->name('client.view');

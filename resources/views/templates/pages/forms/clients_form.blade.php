@@ -119,6 +119,7 @@
                         <div class="pt-4">
                             <div class="row justify-content-start">
                                 <div class="col-sm-9">
+                                    <input type="hidden" name="id" value="{{ isset($client) ? $client->id : '' }}">
                                     <button type="submit"
                                         class="btn btn-primary me-sm-2 me-1 waves-effect waves-light">{{ isset($client) ? 'Update' : 'Submit' }}</button>
                                     <button class="btn btn-label-secondary waves-effect"><a
