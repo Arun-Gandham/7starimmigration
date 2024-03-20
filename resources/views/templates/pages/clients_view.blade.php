@@ -96,7 +96,7 @@
                     <div class="col-sm-6">
                         <label class="col-sm-12 col-form-label" for="multicol-username"><b>Pending Amount :</b></label>
                         <div class="col-sm-12">
-                            {{ isset($client) ? ($client->amount - $client->getPaymentSum() < 0 ? 0 : $client->amount - $client->getPaymentSum()) : '' }}
+                            {{ isset($client) ? ((int) $client->amount - (int) $client->getPaymentSum() < 0 ? 0 : (int) $client->amount - (int) $client->getPaymentSum()) : '' }}
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -118,9 +118,12 @@
 
                     <div class="col-sm-12 mt-4">
                         @if (count($historys))
-                            <a href="{{ route('invoice') }}"><button type="button"
+                            <a href="{{ route('invoice',$client->id) }}"><button type="button"
                                     class="btn btn-success me-sm-2 me-1 waves-effect waves-light"><i
-                                        class="fa-solid fa-download"></i> &nbsp; Invoice</button></a>
+                                        class="fa-solid fa-download"></i> &nbsp; Download Invoice</button></a>
+                                        <a href="{{ route('print.invoice',$client->id) }}" target="_blank"><button type="button"
+                                    class="btn btn-success me-sm-2 me-1 waves-effect waves-light"><i class="fa-solid fa-print"></i> &nbsp; Print Invoice</button></a>
+                                        
                         @endif
                         <a href="{{ route('client.edit', $client->id) }}"><button type="button"
                                 class="btn btn-secondary me-sm-2 me-1 waves-effect waves-dark"><i class="fa fa-pen"></i>
@@ -162,7 +165,7 @@
                                     <div class="col-sm-6">
                                         <label class="col-sm-12 col-form-label" for="multicol-username">Note</label>
                                         <div class="col-sm-12">
-                                            <textarea class="form-control" placeholder="Address" rows="3" name="note"></textarea>
+                                            <textarea class="form-control" placeholder="Note" rows="3" name="note"></textarea>
                                         </div>
                                     </div>
                                     <div class="pt-4">

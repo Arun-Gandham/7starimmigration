@@ -108,7 +108,8 @@ Route::middleware('auth')->group(function () {
 
     //Invoice
 
-    Route::get('/invoice', [InvoiceController::class, 'generatePDF'])->name('invoice');
+    Route::get('/invoice/{client_id}', [InvoiceController::class, 'generatePDF'])->name('invoice');
+    Route::get('/invoice/print/{client_id}', [InvoiceController::class, 'generatePrint'])->name('print.invoice');
 
     //Clients
 
