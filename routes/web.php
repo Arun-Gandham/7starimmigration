@@ -69,6 +69,8 @@ Route::middleware('auth')->group(function () {
 
         //Employes
 
+        Route::get('/employes/{id}/view', [EmployeController::class, 'view'])->name('emp.view');
+
         Route::get('/employes', [EmployeController::class, 'List'])->name('emp.list');
 
         Route::get('/employes/add', [EmployeController::class, 'add'])->name('emp.add');
@@ -83,10 +85,13 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/employes/datatables', [EmployeController::class, 'datatblesList'])->name('emp.list.datatbles');
 
+        Route::get('/employes/{id}/clients', [EmployeController::class, 'clientListByEmployee'])->name('admin.employee.client.list.datatbles');
+        
         // Admin clients
         Route::get('/admins/clients/datatables', [ClientController::class, 'adminDatatblesList'])->name('admin.client.list.datatbles');
 
         Route::get('/admins/clients', [ClientController::class, 'adminList'])->name('admin.client.list');
+        
 
         // Coutries
         Route::prefix('country')->name('country.')->group(function () {

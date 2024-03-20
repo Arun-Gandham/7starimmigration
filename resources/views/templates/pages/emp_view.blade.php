@@ -46,28 +46,55 @@
     @endif
 
 
-    <div class="d-flex justify-content-between">
-        <h4 class="py-3 mb-3">
-            <span class="text-muted fw-light">Administrator /</span> List
-        </h4>
-        <a href="{{ route('emp.add') }}"><button class="btn btn-primary mt-2" style="padding: 15px;height: 30px;"><i
-                    class="fa-solid fa-plus"></i>
-                Add</button></a>
-    </div>
+    <div class="row">
+        <!-- Form Separator -->
+        <div class="col">
+            <div class="card mb-4">
+                    <div class="row mb-3 p-3">
+                        <div class="col-md-6">
+                            <label class="col-sm-3 col-form-label" for="multicol-username">User Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" id="multicol-username" class="form-control" placeholder="User Name"
+                                    name="username" value="{{ isset($user) ? $user->name : '' }}" disabled>
+                            </div>
+                        </div>
 
-    <!-- DataTable with Buttons -->
-    <div class="card">
-        <div class="card-datatable table-responsive pt-0">
-            <table id="data-table" class="datatables-basic table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Phone</th>
-                        <th>Client Count</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-            </table>
+                        <div class="col-md-6">
+                            <label class="col-sm-3 col-form-label" for="multicol-username">Phone</label>
+                            <div class="col-sm-9">
+                                <input type="number" id="multicol-username" class="form-control" placeholder="Phone"
+                                    name="phone" value="{{ isset($user) ? $user->phone : '' }}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="defaultSelect" class="col-sm-3 col-form-label">Role</label>
+                            <div class="col-sm-9">
+                                <select class="form-select" name="role" disabled>
+                                    <option value="Admin">
+                                        Admin</option>
+                                    <option selected value="Emp">
+                                        Employee</option>
+                                </select>
+                            </div>
+                        </div>
+            </div>
+            
+        </div>
+        <div class="card mt-4">
+            <div class="card-datatable table-responsive pt-0">
+                <table id="data-table" class="datatables-basic table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Country</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
     <!--/ DataTable with Buttons -->
@@ -77,15 +104,21 @@
             $('#data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('emp.list.datatbles') }}',
+                ajax: '{{ route('admin.employee.client.list.datatbles',$user->id) }}',
                 columns: [{
-                        data: 'name_link'
+                        data: 'name'
                     },
                     {
                         data: 'phone'
                     },
                     {
-                        data: 'client_count'
+                        data: 'country'
+                    },
+                    {
+                        data: 'amount'
+                    },
+                    {
+                        data: 'date'
                     },
                     {
                         data: 'actions'

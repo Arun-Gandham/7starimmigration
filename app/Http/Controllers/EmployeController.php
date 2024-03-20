@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Client;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use DateTime;
 
 class EmployeController extends Controller
 {
+    public function view($id)
+    {
+        $user = User::findOrFail($id);
+        return view('templates.pages.emp_view',compact('user'));
+    }
 
     public function list()
     {
@@ -93,7 +100,41 @@ class EmployeController extends Controller
                     <a href="' . route('emp.edit', $user->id) . '" class="mx-2"><i class="fa-solid fa-edit"></i></a>
                     </div>';
             })
-            ->rawColumns(['actions'])
+            ->addColumn('name_link', function (User $user) {
+                return '<a href="'.route("emp.view", $user->id).'">'.$user->name.'</a>';
+            })
+            ->addColumn('client_count', function (User $user) {
+                return $user->getClientCount();
+            })
+            ->rawColumns(['actions','name_link'])
+            ->make(true);
+    }
+
+    public function clientListByEmployee($id)
+    {
+        $data = Client::where('user_id',$id)->orderBy('id', 'desc')->get(); // Replace with your model and desired columns
+        return DataTables::of($data)
+            ->addColumn('actions', function (Client $client) {
+                return '<div class="d-flex">
+                    <a href="' . route('client.view', $client->id) . '" class="mx-2"><i class="fa-solid fa-eye"></i></a>
+                    <span class="border border-right-0 border-light"></span>
+                    <a href="' . route('client.delete', $client->id) . '" class="mx-2"><i class="fa-solid fa-trash"></i></a>
+                    <span class="border border-right-0 border-light"></span>
+                    <a href="' . route('client.edit', $client->id) . '" class="mx-2"><i class="fa-solid fa-edit"></i></a>
+                    </div>';
+            })
+            ->addColumn('country', function (Client $client) {
+                return $client->country->name ?? "-";
+            })
+            ->addColumn('emp', function (Client $client) {
+                return $client->employee->name ?? "-";
+            })
+            ->addColumn('date', function (Client $client) {
+                $dateString = $client->created_at;
+                $date = new DateTime($dateString);
+                return $date->format('jS F Y');
+            })
+            ->rawColumns(['actions', 'country'])
             ->make(true);
     }
 }

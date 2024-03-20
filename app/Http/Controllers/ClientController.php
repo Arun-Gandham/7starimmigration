@@ -132,7 +132,7 @@ class ClientController extends Controller
             ->addColumn('emp', function (Client $client) {
                 return $client->employee->name ?? "-";
             })
-            ->rawColumns(['actions', 'country', 'payment'])
+            ->rawColumns(['actions', 'country'])
             ->make(true);
     }
 }
