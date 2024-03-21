@@ -1,8 +1,10 @@
 @extends('layouts/layoutMaster')
 
 @section('title', 'DataTables - Tables')
-
 @section('vendor-style')
+
+    <link rel="stylesheet" href="{{asset('assets/vendor/libs/animate-on-scroll/animate-on-scroll.css')}}" />
+    <script src="{{asset('assets/vendor/libs/animate-on-scroll/animate-on-scroll.js')}}"></script>
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css') }}">
@@ -26,10 +28,22 @@
 @endsection
 
 @section('page-script')
-    {{-- <script src="{{ asset('assets/js/tables-datatables-basic.js') }}"></script> --}}
+<script src="{{asset('assets/js/extended-ui-timeline.js')}}"></script>
 @endsection
 
 @section('content')
+<style>
+    .timeline.timeline-center .timeline-item.timeline-item-left .timeline-event .timeline-event-time
+    {
+        right: -14.3rem !important;
+        top: 14px;
+    }
+    .timeline.timeline-center .timeline-item.timeline-item-right .timeline-event .timeline-event-time
+    {
+        left:-14rem;
+        top: 14px;
+    }
+    </style>
     @if ($error = session('error'))
         <div class="alert alert-danger d-flex align-items-center alert-dismissible" role="alert">
             {{ $error }}
@@ -147,7 +161,12 @@
                                 data-bs-target="#add-payment" aria-controls="navs-pills-top-home" aria-selected="true">Add
                                 Payment</button>
                         </li>
-
+                        @if(auth()->user()->role == "Admin")
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" role="tab" data-bs-toggle="tab"
+                                data-bs-target="#timeline" aria-controls="navs-pills-top-home" aria-selected="true">TimeLine</button>
+                        </li>
+                        @endif
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane fade" id="add-payment" role="tabpanel">
@@ -221,6 +240,117 @@
                                 @endif
                             </div>
                         </div>
+                        @if(auth()->user()->role == "Admin")
+                        <div class="tab-pane fade show" id="timeline" role="tabpanel">
+                            <div class="row overflow-hidden">
+                                <div class="col-12">
+                                    <ul class="timeline timeline-center mt-5">
+                                        @foreach($timelines as $timeline)
+                                        @php
+                                        $timelineChange = unserialize($timeline->change);
+                                        $dateString = $history->created_at; // Example date and time
+                                        $date = new DateTime($timeline->created_at);
+                                        $formattedDateTime = $date->format('jS F Y, g:i A');
+                                        @endphp
+                                        @if($timelineChange['type'] == "details")
+                                            <li class="timeline-item timeline-item-left">
+                                                <span class="timeline-indicator timeline-indicator-primary" data-aos="zoom-in" data-aos-delay="200">
+                                                <i class="ti ti-server ti-sm"></i>
+                                                </span>
+                                                <div class="timeline-event card p-0" data-aos="fade-right">
+                                                <div class="card-header border-0 d-flex justify-content-between">
+                                                    <h6 class="card-title mb-0">Details Updated</h6>
+                                                    <!-- <span class="text-muted">5:00 - 6:10AM</span> -->
+                                                </div>
+                                                <div class="card-body pb-3 pt-0">
+                                                    @if($timelineChange['old']['name'] != $timelineChange['new']['name'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    Name: <span>{{ $timelineChange['old']['name'] ?? "-" }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['name'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                    @if($timelineChange['old']['amount'] != $timelineChange['new']['amount'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    Amount: <span>{{ $timelineChange['old']['amount'] ?? "-"  }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['amount'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                    @if($timelineChange['old']['enq_status'] != $timelineChange['new']['enq_status'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    Enquiry Status: <span>{{ $timelineChange['old']['enq_status'] ?? "-"  }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['enq_status'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                    @if($timelineChange['old']['file_submitted'] != $timelineChange['new']['file_submitted'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    File Submitted: <span>{{ $timelineChange['old']['file_submitted'] ?? "-"  }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['file_submitted'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                    @if($timelineChange['old']['country_id'] != $timelineChange['new']['country_id'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    Country: <span>{{ $timelineChange['old']['country_id'] ?? "-"  }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['country_id'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                    @if($timelineChange['old']['comment'] != $timelineChange['new']['comment'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    Comment: <span>{{ $timelineChange['old']['comment'] ?? "-"  }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['comment'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                    @if($timelineChange['old']['address'] != $timelineChange['new']['address'])
+                                                    <div class="hours mb-2">
+                                                    <i class="ti ti-clock"></i>
+                                                    Address: <span>{{ $timelineChange['old']['address'] ?? "-"  }}</span>
+                                                    <i class="ti ti-arrow-right mx-2"></i>
+                                                    <span>{{ $timelineChange['new']['address'] ?? "-"  }}</span>
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                <div class="timeline-event-time">{{ $formattedDateTime ?? "-"  }}</div>
+                                                </div>
+                                            </li>
+                                        @else
+                                            <li class="timeline-item timeline-item-right">
+                                                <span class="timeline-indicator timeline-indicator-success" data-aos="zoom-in" data-aos-delay="200">
+                                                <i class="ti ti-currency-rupee ti-sm"></i>
+                                                </span>
+                                                <div class="timeline-event card p-0" data-aos="fade-right">
+                                                <h6 class="card-header">{{ $timelineChange["message"] ?? "-"  }}</h6>
+                                                <div class="card-body">
+                                                    <ul class="list-unstyled">
+                                                    <li class="d-flex justify-content-start align-items-center text-success mb-3">
+                                                        <i class="ti ti-currency-rupee ti-sm me-3"></i>
+                                                        <div class="ps-3 border-start">
+                                                        <small class="text-muted mb-1">Amount</small>
+                                                        <h5 class="mb-0">&#8377;{{ $timelineChange["amount"] ?? "-"  }}</h5>
+                                                        </div>
+                                                    </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="timeline-event-time">{{ $formattedDateTime ?? "-"  }}</div>
+                                                </div>
+                                            </li>
+                                        @endif
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>

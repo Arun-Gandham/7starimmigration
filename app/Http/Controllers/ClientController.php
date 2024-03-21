@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClientTimeline;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Country;
@@ -27,10 +28,16 @@ class ClientController extends Controller
 
     public function view($id)
     {
+        $timelines = [];
+        if(auth()->user()->role == "Admin")
+        {
+            $timelines = ClientTimeline::where('client_id',$id)->orderBy('id',"DESC")->get();
+        }
+        
         $client = Client::findOrFail($id);
         $historys = PaymentHistory::where('client_id', $id)->get();
 
-        return view('templates.pages.clients_view', compact('client', 'historys'));
+        return view('templates.pages.clients_view', compact('client', 'historys','timelines'));
     }
 
     public function add()
@@ -62,7 +69,32 @@ class ClientController extends Controller
     public function editSubmit(Request $req)
     {
 
+
         $client = Client::findOrFail($req->id);
+
+        $change["type"] = "details";
+        $change["message"] = "Details updated";
+
+        $change["old"]["name"] = $client->name;
+        $change["old"]["comment"] = $client->comment;
+        $change["old"]["file_submitted"] = $client->file_submitted;
+        $change["old"]["enq_status"] = $client->enq_status;
+        $change["old"]["address"] = $client->address;
+        $change["old"]["amount"] = $client->amount;
+        $change["old"]["country_id"] = Country::findOrFail($client->country_id)->name;
+
+        $change["new"]["name"] = $req->name;
+        $change["new"]["comment"] = $req->comment;
+        $change["new"]["file_submitted"] = $req->file_submitted;
+        $change["new"]["enq_status"] = $req->enq_status;
+        $change["new"]["address"] = $req->address;
+        $change["new"]["amount"] = $req->amount;
+        $change["new"]["country_id"] = Country::findOrFail($req->country_id)->name;;
+
+        ClientTimeline::create(
+            ['client_id' => $req->id, 'change' => serialize($change), 'user_id' => auth()->user()->id]
+        );
+
         $client->name = $req->name;
         $client->comment = $req->comment;
         $client->file_submitted = $req->file_submitted;
