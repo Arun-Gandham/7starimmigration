@@ -110,9 +110,15 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
+                            <label class="col-sm-12 col-form-label" for="multicol-username">Comment</label>
+                            <div class="col-sm-9">
+                                <textarea class="form-control" placeholder="Comment" rows="3" name="comment">{{ isset($client) ? $client->comment : '' }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
                             <label class="col-sm-12 col-form-label" for="multicol-username">Address</label>
-                            <div class="col-sm-12">
+                            <div class="col-sm-9">
                                 <textarea class="form-control" placeholder="Address" rows="3" required name="address">{{ isset($client) ? $client->address : '' }}</textarea>
                             </div>
                         </div>

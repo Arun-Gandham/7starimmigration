@@ -54,7 +54,45 @@
                     class="fa-solid fa-plus"></i>
                 Add</button></a>
     </div>
-
+    
+    <div class="card mb-4">
+                <form class="card-body" method="GET" id="filterForm">
+                    <div class="row">
+                        <div class="col-md-5  col-sm-12">
+                            <div class="col-sm-9">
+                                <span>Employee: </span><select class="form-select" id="basic-default-country" name="emp">
+                                <option value="">Select Employee</option>
+                                    @foreach ($emps as $emp)
+                                        <option
+                                            {{ isset($empParam) && $empParam == $emp->id ? 'selected' : '' }}
+                                            value="{{ $emp->id }}">{{ $emp->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-12 ">
+                            <div class="col-sm-9">
+                            <span>Country: </span><select class="form-select" id="basic-default-country" name="cnt">
+                                <option value="">Select Country</option>
+                                    @foreach ($countries as $country)
+                                        <option
+                                            {{ isset($cntParam) && $cntParam == $country->id ? 'selected' : '' }}
+                                            value="{{ $country->id }}">{{ $country->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-sm-12 mt-sm-2">
+                            <div class="d-flex align-items-end h-100 justify-content-md-end">
+                                    <button type="submit"
+                                        class="btn btn-primary me-sm-2 me-1 waves-effect waves-light">{{ isset($client) ? 'Update' : 'Submit' }}</button>
+                                    <button class="btn btn-label-secondary waves-effect"><a
+                                            href="{{ route('admin.client.list') }}">Reset</a></button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
     <!-- DataTable with Buttons -->
     <div class="card">
         <div class="card-datatable table-responsive pt-0">
@@ -75,10 +113,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
+            var searchParams = new URLSearchParams(window.location.search);
+
+            // Get the value of the 'cnt' query parameter, or an empty string if it doesn't exist
+            var cntParam = searchParams.get('cnt') || '';
+
+            // Get the value of the 'emp' query parameter, or an empty string if it doesn't exist
+            var empParam = searchParams.get('emp') || '';
             $('#data-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{ route('admin.client.list.datatbles') }}',
+                ajax: '{{ route('admin.client.list.datatbles') }}'+ '?cnt=' + cntParam + '&emp=' + empParam,
+                
                 columns: [{
                         data: 'name'
                     },
@@ -95,6 +141,16 @@
                         data: 'actions'
                     }
                 ]
+            });
+        });
+
+        document.getElementById('filterForm').addEventListener('submit', function(event) {
+            var form = this;
+            var inputs = form.querySelectorAll('select');
+            inputs.forEach(function(input) {
+                if (input.value === '') {
+                    input.disabled = true; // Disable empty inputs to exclude them from GET parameters
+                }
             });
         });
     </script>

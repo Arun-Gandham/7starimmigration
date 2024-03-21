@@ -41,11 +41,12 @@
             </button>
         </div>
     @endif
+    
 
 
     <div class="d-flex justify-content-between">
         <h4 class="py-3 mb-3">
-            <span class="text-muted fw-light">Employees /</span> List
+            <span class="text-muted fw-light">Employees  /</span> List
         </h4>
         <a href="{{ route('emp.add') }}"><button class="btn btn-primary mt-2" style="padding: 15px;height: 30px;"><i
                     class="fa-solid fa-plus"></i>

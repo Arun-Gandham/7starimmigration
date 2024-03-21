@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Country;
 use App\Models\PaymentHistory;
@@ -17,7 +18,11 @@ class ClientController extends Controller
 
     public function adminList()
     {
-        return view('templates.pages.admin_clients_list');
+        $cntParam = isset($_GET['cnt']) ? $_GET['cnt'] : null;
+        $empParam = isset($_GET['emp']) ? $_GET['emp'] : null;
+        $countries = Country::all();
+        $emps = User::where('role','Emp')->get();
+        return view('templates.pages.admin_clients_list', compact('countries','emps','cntParam','empParam'));
     }
 
     public function view($id)
@@ -59,6 +64,7 @@ class ClientController extends Controller
 
         $client = Client::findOrFail($req->id);
         $client->name = $req->name;
+        $client->comment = $req->comment;
         $client->file_submitted = $req->file_submitted;
         $client->enq_status = $req->enq_status;
         $client->address = $req->address;
@@ -80,7 +86,7 @@ class ClientController extends Controller
             return redirect()->back()->with('error', 'Phone number already exist!!!');
         }
         $client = Client::create(
-            ['user_id' => auth()->user()->id, 'name' => $req->name, 'country_id' => $req->country_id, 'amount' => $req->amount, 'phone' => $req->phone, 'file_submitted' => $req->file_submitted, 'enq_status' => $req->enq_status, 'address' => $req->address]
+            ['user_id' => auth()->user()->id, 'name' => $req->name, 'country_id' => $req->country_id,'comment' => $req->comment, 'amount' => $req->amount, 'phone' => $req->phone, 'file_submitted' => $req->file_submitted, 'enq_status' => $req->enq_status, 'address' => $req->address]
         );
 
         if ($client) {
@@ -98,8 +104,6 @@ class ClientController extends Controller
                 return '<div class="d-flex">
                     <a href="' . route('client.view', $client->id) . '" class="mx-2"><i class="fa-solid fa-eye"></i></a>
                     <span class="border border-right-0 border-light"></span>
-                    <a href="' . route('client.delete', $client->id) . '" class="mx-2"><i class="fa-solid fa-trash"></i></a>
-                    <span class="border border-right-0 border-light"></span>
                     <a href="' . route('client.edit', $client->id) . '" class="mx-2"><i class="fa-solid fa-edit"></i></a>
                     </div>';
             })
@@ -115,7 +119,25 @@ class ClientController extends Controller
 
     public function adminDatatblesList(Request $request)
     {
-        $data = Client::orderBy('id', 'desc')->get(); // Replace with your model and desired columns
+        $data = Client::orderBy('id', 'desc');
+        // Retrieve the value of the 'cnt' query parameter
+        $cntParam = $request->query('cnt');
+
+        // Retrieve the value of the 'emp' query parameter
+        $empParam = $request->query('emp');
+
+        // Check if 'cnt' parameter exists and is not empty
+        if ($cntParam !== null && $cntParam !== '') {
+            $data->where('country_id', $cntParam);
+        }
+
+        // Check if 'emp' parameter exists and is not empty
+        if ($empParam !== null && $empParam !== '') {
+            $data->where('user_id', $empParam);
+        }
+
+        // Fetch the data
+        $data = $data->get();
         return DataTables::of($data)
             ->addColumn('actions', function (Client $client) {
                 return '<div class="d-flex">
