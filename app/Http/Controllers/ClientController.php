@@ -186,6 +186,12 @@ class ClientController extends Controller
             ->addColumn('emp', function (Client $client) {
                 return $client->employee->name ?? "-";
             })
+            ->addColumn('emp_number', function (Client $client) {
+                return $client->employee->phone ?? "-";
+            })
+            ->addColumn('paid_amt', function (Client $client) {
+                return $client->payment->sum('amount') ?? "-";
+            })
             ->rawColumns(['actions', 'country'])
             ->make(true);
     }
